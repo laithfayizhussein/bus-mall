@@ -1,0 +1,11 @@
+section{
+    display: inline-block;
+}
+
+ul li {
+ 
+    padding: 5px;
+}
+ul{
+    display: inline-block;
+}
