@@ -53,17 +53,31 @@ function gIndix() {
 
 }
 
+
+let checkArray =[];
+let sureNr1 ;
+let sureNr2 ;
+let sureNr3 ;
+
 function renderImg() {
   leftImg=gIndix ();
   middleImg=gIndix();
   rightImg=gIndix();
 
 
+  sureNr1=checkArray.includes(rightImg);
+  sureNr2=checkArray.includes(middleImg);
+  sureNr3=checkArray.includes(leftImg);
 
-  while (leftImg === rightImg || leftImg === middleImg || rightImg === middleImg ) {
+
+  while (leftImg === rightImg || leftImg === middleImg || rightImg === middleImg ||sureNr1||sureNr2||sureNr3 ) {
     leftImg=gIndix();
     rightImg= gIndix();
     middleImg= gIndix();
+
+    sureNr1=checkArray.includes(rightImg);
+    sureNr2=checkArray.includes(middleImg);
+    sureNr3=checkArray.includes(leftImg);
   }
 
   allImg[leftImg].itemShowNum+=1;
@@ -73,6 +87,7 @@ function renderImg() {
   left.setAttribute('src',allImg[leftImg].path);
   middle.setAttribute('src',allImg[middleImg].path);
   right.setAttribute('src',allImg[rightImg].path);
+  checkArray=[leftImg,rightImg,middleImg];
 
 }
 renderImg();
@@ -110,10 +125,48 @@ function clickHandle(event) {
       arrayVotes.push(allImg[i].vote);
       arrayShown.push(allImg[i].itemShowNum);
     }
+    Chartrender();
   }
 }
+function Chartrender(){
+  let ctx = document.getElementById('myChart').getContext('2d');
+  myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: arrayNames,
+      datasets: [{
+        label: 'Votes',
+        data: arrayVotes,
+        backgroundColor: [
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 2
+      },{
+        label: 'showm',
+        data: arrayShown,
+        backgroundColor: [
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(155, 100, 64, 1)'
+        ],
+        borderWidth: 2
 
 
+      }]
 
+    },
 
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
 
