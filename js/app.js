@@ -5,7 +5,7 @@ let middle = document.getElementById('secondImg');
 let right = document.getElementById('thirdImg');
 let container=document.getElementById('container');
 let count = 0;
-let maxCount = 25;
+let maxCount = 5;
 let leftImg ;
 let middleImg ;
 let rightImg ;
@@ -98,9 +98,8 @@ let arrayNames=[];
 let arrayVotes=[];
 let arrayShown=[];
 
-
-container.addEventListener('click',clickHandle);
-
+container.addEventListener('click' , clickHandle);
+gittingData();
 
 function clickHandle(event) {
   count++;
@@ -112,7 +111,13 @@ function clickHandle(event) {
     }else{
       allImg[rightImg].vote++;
     }
-    renderImg(); }
+
+
+    allData();
+
+    renderImg();
+  }
+
   else{
 
     container.removeEventListener('click',clickHandle);
@@ -127,7 +132,13 @@ function clickHandle(event) {
     }
     Chartrender();
   }
+
 }
+
+
+
+
+
 function Chartrender(){
   let ctx = document.getElementById('myChart').getContext('2d');
   myChart = new Chart(ctx, {
@@ -168,5 +179,23 @@ function Chartrender(){
       }
     }
   });
+}
+
+function allData() {
+  let data=JSON.stringify(allImg);
+  localStorage.setItem('products',data);
+
+}
+
+function gittingData() {
+
+  let data = localStorage.getItem('products');
+  let backData=JSON.parse(data);
+
+  if (backData ) {
+    allImg =backData;
+  }
+  renderImg();
+
 }
 
